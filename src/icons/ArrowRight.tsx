@@ -1,0 +1,30 @@
+import { cn } from '../lib/cn';
+import type { IconMeta, IconProps } from './types';
+
+const meta: IconMeta = {
+  name: 'ArrowRight',
+  category: 'arrow',
+  tags: ["arrow","right"] as const,
+} as const;
+
+export function ArrowRight({ size = 24, className, ...props }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 15.5858 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      className={cn(
+        'stroke-[var(--stroke-color-default)] [stroke-width:var(--stroke-width-selected)]',
+        className,
+      )}
+      {...props}
+    >
+      <path d="M1 7H14M9 1L14.2929 6.29289C14.6834 6.68342 14.6834 7.31658 14.2929 7.70711L9 13" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+    </svg>
+  );
+}
+
+ArrowRight.meta = meta;
