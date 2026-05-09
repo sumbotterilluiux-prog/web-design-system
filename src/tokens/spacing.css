@@ -1,4 +1,48 @@
-/* Spacing tokens — overridable per project */
+/* Spacing tokens — overridable per project.
+ * Sourced from Figma file `Tokens` (key: m6o0nlULKxBBGJh5JbTr8b).
+ * Categories preserve Figma group names: gap, padding, stroke.
+ */
 :root {
-  /* Tokens will be populated from Figma during component build */
+  /* Gap scale — complete */
+  --gap-3xs: 2px;
+  --gap-2xs: 4px;
+  --gap-xs: 8px;
+  --gap-sm: 12px;
+  --gap-md: 16px;
+  --gap-lg: 20px;
+  --gap-xl: 24px;
+  --gap-2xl: 32px;
+  --gap-3xl: 40px;
+  --gap-4xl: 64px;
+  --gap-5xl: 96px;
+
+  /* Padding scale — complete */
+  --padding-3xs: 2px;
+  --padding-2xs: 4px;
+  --padding-xs: 8px;
+  --padding-sm: 12px;
+  --padding-md: 16px;
+  --padding-lg: 20px;
+  --padding-xl: 24px;
+  --padding-2xl: 32px;
+  --padding-3xl: 40px;
+  --padding-4xl: 64px;
+  --padding-5xl: 96px;
+
+  /* Stroke widths */
+  --stroke-width-thin: 0.5px;
+  --stroke-width-default: 1px;
+  --stroke-width-focus: 1.5px;
+  --stroke-width-selected: 2px;
+  --stroke-width-thick: 3px;
+
+  /* Stroke radii — complete */
+  --stroke-radius-2xs: 2px;
+  --stroke-radius-xs: 4px;
+  --stroke-radius-sm: 8px;
+  --stroke-radius-md: 12px;
+  --stroke-radius-lg: 16px;
+  --stroke-radius-xl: 24px;
+  --stroke-radius-2xl: 32px;
+  --stroke-radius-full: 512px;
 }

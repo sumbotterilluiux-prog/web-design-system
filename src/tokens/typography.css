@@ -1,4 +1,60 @@
-/* Typography tokens — overridable per project */
+/* Typography tokens — overridable per project.
+ * Sourced from Figma file `Tokens` (key: m6o0nlULKxBBGJh5JbTr8b).
+ * Atomic family / weight / size / line-height / letter-spacing tokens.
+ * Composite Figma styles (e.g. `web/header/h1`) are assembled in components
+ * by referencing the matching atomic tokens below.
+ */
 :root {
-  /* Tokens will be populated from Figma during component build */
+  /* Families */
+  --font-family-body: "Mulish", system-ui, sans-serif;
+  --font-family-header: "Mulish", system-ui, sans-serif;
+  --font-family-subheader: "Mulish", system-ui, sans-serif;
+
+  /* Weights */
+  --font-weight-body-regular: 400;
+  --font-weight-body-bold: 600;
+  --font-weight-header: 700;
+  --font-weight-headline: 700;
+  --font-weight-display: 900;
+  --font-weight-subheader: 700;
+  --font-weight-link: 500;
+  --font-weight-button: 600;
+
+  /* Sizes — body */
+  --font-size-web-body-2xs: 10px;
+  --font-size-web-body-xs: 12px;
+  --font-size-web-body-sm: 14px;
+  --font-size-web-body-md: 16px;
+  --font-size-web-body-lg: 18px;
+  --font-size-web-body-xl: 20px;
+
+  /* Sizes — header */
+  --font-size-web-header-h5: 16px;
+  --font-size-web-header-h4: 18px;
+  --font-size-web-header-h3: 20px;
+  --font-size-web-header-h2: 24px;
+  --font-size-web-header-h1: 36px;
+  --font-size-web-header-headline: 48px;
+  --font-size-web-header-display: 64px;
+
+  /* Sizes — subheader */
+  --font-size-web-header-subheader-sm: 14px;
+  --font-size-web-header-subheader-md: 16px;
+  --font-size-web-header-subheader-lg: 18px;
+
+  /* Line heights */
+  --font-line-height-body: 1.4;
+  --font-line-height-header: 1.4;
+  --font-line-height-subheader: 1.4;
+
+  /* Letter spacing */
+  --font-letter-spacing-body: 0;
+  --font-letter-spacing-header: 0;
+  --font-letter-spacing-subheader: 0;
+
+  /* One-off: Semibold/18 (Figma uses literal "Inter" family — not a token).
+   * Reference these and the Inter family directly when implementing that style. */
+  --font-size-semibold-18: 18px;
+  --font-line-height-semibold-18: 24px;
+  --font-letter-spacing-semibold-18: -0.26px;
 }
