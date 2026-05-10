@@ -12,7 +12,7 @@ export function Slash({ size = 24, className, ...props }: IconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 10.0004 18.0004"
+      viewBox="-6.9998 -2.9998 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

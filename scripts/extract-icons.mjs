@@ -87,14 +87,29 @@ function reactifyAttributes(s) {
   return out;
 }
 
+/**
+ * Detect whether an icon's vector content is fill-based (closed shapes
+ * coloured by `fill="..."`) or stroke-based (outlined by `stroke="..."`).
+ * Figma exports some icons as outlined-paths-converted-to-fills, which
+ * means stroking them again at the SVG level produces a visibly heavier
+ * icon than its stroke-based siblings.
+ */
+function isFillBased(svgText) {
+  const inner = svgText.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
+  if (!inner) return false;
+  return /fill="(?!none")[^"]+"/.test(inner[1]);
+}
+
 function transformInner(svgText) {
   const inner = svgText.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
   if (!inner) throw new Error('No <svg> root in asset');
   let body = inner[1].trim();
 
-  // Drop hardcoded stroke / stroke-width / id="Icon" — Tailwind classes drive these.
+  // Drop hardcoded stroke / stroke-width / non-none fill / id —
+  // Tailwind classes on the SVG element drive these via tokens.
   body = body.replaceAll(/\s+stroke="[^"]*"/g, '');
   body = body.replaceAll(/\s+stroke-width="[^"]*"/g, '');
+  body = body.replaceAll(/\s+fill="(?!none")[^"]*"/g, '');
   body = body.replaceAll(/\s+id="[^"]*"/g, '');
 
   body = reactifyAttributes(body);
@@ -117,8 +132,42 @@ function viewBoxFrom(svgText) {
   return m ? m[1] : '0 0 24 24';
 }
 
-function componentFile({ componentName, rawName, viewBox, body }) {
+/**
+ * Normalize a Figma-cropped viewBox to a 24×24 canvas while preserving
+ * each icon's natural Figma proportions (1:1 with the source design).
+ *
+ * Figma's MCP exports cropped SVG assets — viewBox is the path's bounding
+ * box (e.g. ArrowUp at 14×15.6) rather than the parent 24×24 frame.
+ * Rendering at width=24 height=24 with the cropped viewBox would auto-
+ * scale via preserveAspectRatio, producing inconsistent sizes that don't
+ * match Figma.
+ *
+ * Strategy: keep user-space units 1:1 with viewport pixels (vbDim = 24)
+ * and shift minX/minY so the path's bounding box is centered within the
+ * 24-square. Each icon renders at exactly its Figma-designed size — a
+ * chevron stays compact, a circle fills more of the canvas — matching
+ * the source 1:1.
+ */
+function normalizeViewBoxTo24(viewBox) {
+  const parts = viewBox.trim().split(/\s+/).map(Number);
+  if (parts.length !== 4 || parts.some(Number.isNaN)) return '0 0 24 24';
+  const [minX, minY, w, h] = parts;
+  const TARGET = 24;
+  const newMinX = minX - (TARGET - w) / 2;
+  const newMinY = minY - (TARGET - h) / 2;
+  const fmt = (n) => Number(n.toFixed(4)).toString();
+  return `${fmt(newMinX)} ${fmt(newMinY)} ${TARGET} ${TARGET}`;
+}
+
+function componentFile({ componentName, rawName, viewBox, body, fillBased }) {
   const tags = tagsFromName(rawName);
+  // Stroke-based icons inherit color via `stroke`; fill-based ones (where Figma
+  // expanded strokes to filled shapes on export) inherit via `fill`. Applying
+  // stroke-width to a fill-based icon would draw an extra outline around the
+  // already-filled shape, making it look heavier than stroke-only siblings.
+  const tokenClasses = fillBased
+    ? "'fill-[var(--stroke-color-default)]'"
+    : "'stroke-[var(--stroke-color-default)] [stroke-width:var(--stroke-width-selected)]'";
   return `import { cn } from '../lib/cn';
 import type { IconMeta, IconProps } from './types';
 
@@ -138,7 +187,7 @@ export function ${componentName}({ size = 24, className, ...props }: IconProps) 
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       className={cn(
-        'stroke-[var(--stroke-color-default)] [stroke-width:var(--stroke-width-selected)]',
+        ${tokenClasses},
         className,
       )}
       {...props}
@@ -225,13 +274,15 @@ async function main() {
   // Generate .tsx files
   const written = [];
   for (const icon of downloaded) {
-    const viewBox = viewBoxFrom(icon.svg);
+    const viewBox = normalizeViewBoxTo24(viewBoxFrom(icon.svg));
+    const fillBased = isFillBased(icon.svg);
     const body = transformInner(icon.svg);
     const tsx = componentFile({
       componentName: icon.componentName,
       rawName: icon.rawName,
       viewBox,
       body,
+      fillBased,
     });
     const outPath = resolve(iconsDir, `${icon.componentName}.tsx`);
     await writeFile(outPath, tsx, 'utf8');

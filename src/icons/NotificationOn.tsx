@@ -12,7 +12,7 @@ export function NotificationOn({ size = 24, className, ...props }: IconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 20.3363 22.0001"
+      viewBox="-1.8318 -1 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

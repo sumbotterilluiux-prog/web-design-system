@@ -12,7 +12,7 @@ export function Ribbon2({ size = 24, className, ...props }: IconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 18.5918 18.2959"
+      viewBox="-2.7041 -2.8521 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

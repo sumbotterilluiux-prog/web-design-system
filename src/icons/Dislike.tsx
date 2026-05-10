@@ -12,7 +12,7 @@ export function Dislike({ size = 24, className, ...props }: IconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 21.0017 19.9998"
+      viewBox="-1.4992 -2.0001 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

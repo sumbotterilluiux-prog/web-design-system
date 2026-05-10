@@ -21,12 +21,56 @@ function groupByCategory(list: IconComponent[]) {
   return [...map.entries()].sort(([a], [b]) => a.localeCompare(b));
 }
 
+function CategoryChip({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'px-[var(--padding-md)] py-[var(--padding-2xs)]',
+        'rounded-[var(--stroke-radius-full)]',
+        'border [border-width:var(--stroke-width-default)]',
+        'font-[family-name:var(--font-family-body)]',
+        'text-[length:var(--font-size-web-body-sm)]',
+        '[font-weight:var(--font-weight-body-regular)]',
+        'cursor-pointer',
+        active
+          ? 'bg-[var(--color-neutral-solid-950)] text-[var(--color-neutral-solid-50)] border-[var(--color-neutral-solid-950)]'
+          : 'bg-[var(--color-neutral-solid-50)] text-[var(--color-font-primary)] border-[var(--stroke-color-tertiary)]',
+      )}
+    >
+      {label}
+    </button>
+  );
+}
+
+/**
+ * Split a PascalCase identifier into space-separated words for readable display
+ * (e.g. "ChevronContractHorizontal" → "Chevron Contract Horizontal"). The
+ * actual exported component name stays PascalCase — this is purely for the
+ * catalog label so long names wrap naturally and stay inside their tile.
+ */
+function displayName(name: string): string {
+  return name
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
+}
+
 function IconTile({ Icon }: { Icon: IconComponent }) {
   return (
     <div
       className={cn(
         'flex flex-col items-center justify-center',
         'gap-[var(--gap-xs)] p-[var(--padding-md)]',
+        'min-h-[96px]',
         'rounded-[var(--stroke-radius-sm)]',
         'border border-[var(--stroke-color-tertiary)]',
         '[border-width:var(--stroke-width-default)]',
@@ -36,29 +80,36 @@ function IconTile({ Icon }: { Icon: IconComponent }) {
       <span
         className={cn(
           'font-[family-name:var(--font-family-body)]',
-          'text-[length:var(--font-size-web-body-xs)]',
+          'text-[length:var(--font-size-web-body-2xs)]',
+          'leading-tight',
           '[font-weight:var(--font-weight-body-regular)]',
           'text-[color:var(--color-font-secondary)]',
-          'text-center',
+          'text-center break-words w-full',
         )}
       >
-        {Icon.meta.name}
+        {displayName(Icon.meta.name)}
       </span>
     </div>
   );
 }
 
+type CategoryFilter = 'all' | IconCategory;
+
 function Catalog() {
   const [query, setQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
+
+  const allCategories = useMemo(() => groupByCategory(allIcons), []);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
-    if (!q) return allIcons;
     return allIcons.filter((icon) => {
+      if (activeCategory !== 'all' && icon.meta.category !== activeCategory) return false;
+      if (!q) return true;
       if (icon.meta.name.toLowerCase().includes(q)) return true;
       return icon.meta.tags.some((t) => t.toLowerCase().includes(q));
     });
-  }, [query]);
+  }, [query, activeCategory]);
 
   const groups = groupByCategory(filtered);
 
@@ -80,9 +131,24 @@ function Catalog() {
             'text-[color:var(--color-font-secondary)]',
           )}
         >
-          {allIcons.length} icons across {groupByCategory(allIcons).length} categories.
-          Search by name or tag.
+          {allIcons.length} icons across {allCategories.length} categories.
+          Search by name or tag, or filter by category.
         </p>
+        <div className="flex flex-wrap gap-[var(--gap-2xs)]">
+          <CategoryChip
+            label={`all (${allIcons.length})`}
+            active={activeCategory === 'all'}
+            onClick={() => setActiveCategory('all')}
+          />
+          {allCategories.map(([cat, list]) => (
+            <CategoryChip
+              key={cat}
+              label={`${cat} (${list.length})`}
+              active={activeCategory === cat}
+              onClick={() => setActiveCategory(cat)}
+            />
+          ))}
+        </div>
         <input
           type="search"
           placeholder="Search icons…"

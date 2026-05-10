@@ -12,7 +12,7 @@ export function HalfStar({ size = 24, className, ...props }: IconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 11.8888 19.8478"
+      viewBox="-6.0556 -2.0761 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

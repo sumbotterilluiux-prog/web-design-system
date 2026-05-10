@@ -12,7 +12,7 @@ export function Pin({ size = 24, className, ...props }: IconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 20.523 20.523"
+      viewBox="-1.7385 -1.7385 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

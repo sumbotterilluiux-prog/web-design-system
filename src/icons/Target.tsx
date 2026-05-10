@@ -12,7 +12,7 @@ export function Target({ size = 24, className, ...props }: IconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24.3152 24.3152"
+      viewBox="0.1576 0.1576 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

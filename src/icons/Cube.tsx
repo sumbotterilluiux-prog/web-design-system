@@ -12,7 +12,7 @@ export function Cube({ size = 24, className, ...props }: IconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 19.3205 21.3812"
+      viewBox="-2.3398 -1.3094 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

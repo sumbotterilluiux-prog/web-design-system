@@ -12,7 +12,7 @@ export function Alarmclock({ size = 24, className, ...props }: IconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 22.1779 21.3948"
+      viewBox="-0.911 -1.3026 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
