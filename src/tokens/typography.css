@@ -6,9 +6,9 @@
  */
 :root {
   /* Families */
-  --font-family-body: "Mulish", system-ui, sans-serif;
-  --font-family-header: "Mulish", system-ui, sans-serif;
-  --font-family-subheader: "Mulish", system-ui, sans-serif;
+  --font-family-body: "Mulish Variable", system-ui, sans-serif;
+  --font-family-header: "Mulish Variable", system-ui, sans-serif;
+  --font-family-subheader: "Mulish Variable", system-ui, sans-serif;
 
   /* Weights */
   --font-weight-body-regular: 400;

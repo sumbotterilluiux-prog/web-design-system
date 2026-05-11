@@ -7,7 +7,7 @@ const meta: IconMeta = {
   tags: ["slash"] as const,
 } as const;
 
-export function Slash({ size = 24, className, ...props }: IconProps) {
+export function Slash({ size = 24, strokeWidth = 2, className, ...props }: IconProps) {
   return (
     <svg
       width={size}
@@ -16,13 +16,10 @@ export function Slash({ size = 24, className, ...props }: IconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
-      className={cn(
-        'stroke-[var(--stroke-color-default)] [stroke-width:var(--stroke-width-selected)]',
-        className,
-      )}
+      className={cn(className)}
       {...props}
     >
-      <path d="M9.00022 1.00022L1.00022 17.0002" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <path d="M9.00022 1.00022L1.00022 17.0002" strokeLinecap="round" vectorEffect="non-scaling-stroke" stroke="currentColor" strokeWidth={strokeWidth}  />
     </svg>
   );
 }

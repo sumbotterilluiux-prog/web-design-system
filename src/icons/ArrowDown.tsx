@@ -7,7 +7,7 @@ const meta: IconMeta = {
   tags: ["arrow","down"] as const,
 } as const;
 
-export function ArrowDown({ size = 24, className, ...props }: IconProps) {
+export function ArrowDown({ size = 24, strokeWidth = 2, className, ...props }: IconProps) {
   return (
     <svg
       width={size}
@@ -16,13 +16,10 @@ export function ArrowDown({ size = 24, className, ...props }: IconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
-      className={cn(
-        'stroke-[var(--stroke-color-default)] [stroke-width:var(--stroke-width-selected)]',
-        className,
-      )}
+      className={cn(className)}
       {...props}
     >
-      <path d="M7 1L7 14M13 9L7.70711 14.2929C7.31658 14.6834 6.68342 14.6834 6.29289 14.2929L1 9" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <path d="M7 1L7 14M13 9L7.70711 14.2929C7.31658 14.6834 6.68342 14.6834 6.29289 14.2929L1 9" strokeLinecap="round" vectorEffect="non-scaling-stroke" stroke="currentColor" strokeWidth={strokeWidth}  />
     </svg>
   );
 }

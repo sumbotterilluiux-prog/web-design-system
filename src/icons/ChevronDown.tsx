@@ -7,7 +7,7 @@ const meta: IconMeta = {
   tags: ["chevron","down"] as const,
 } as const;
 
-export function ChevronDown({ size = 24, className, ...props }: IconProps) {
+export function ChevronDown({ size = 24, strokeWidth = 2, className, ...props }: IconProps) {
   return (
     <svg
       width={size}
@@ -16,13 +16,10 @@ export function ChevronDown({ size = 24, className, ...props }: IconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
-      className={cn(
-        'stroke-[var(--stroke-color-default)] [stroke-width:var(--stroke-width-selected)]',
-        className,
-      )}
+      className={cn(className)}
       {...props}
     >
-      <path d="M13 1L7.70711 6.29289C7.31658 6.68342 6.68342 6.68342 6.29289 6.29289L1 1" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <path d="M13 1L7.70711 6.29289C7.31658 6.68342 6.68342 6.68342 6.29289 6.29289L1 1" strokeLinecap="round" vectorEffect="non-scaling-stroke" stroke="currentColor" strokeWidth={strokeWidth}  />
     </svg>
   );
 }

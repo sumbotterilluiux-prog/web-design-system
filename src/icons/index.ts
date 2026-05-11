@@ -1,4 +1,6 @@
 export type { IconCategory, IconMeta, IconProps } from './types';
+export { STROKE_WIDTHS } from './strokeWidths';
+export type { StrokeWidthKey, StrokeWidthValue } from './strokeWidths';
 export { AcademicCap } from './AcademicCap';
 export { Alarmclock } from './Alarmclock';
 export { AlertCircle } from './AlertCircle';

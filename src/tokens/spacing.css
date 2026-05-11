@@ -1,6 +1,6 @@
 /* Spacing tokens — overridable per project.
  * Sourced from Figma file `Tokens` (key: m6o0nlULKxBBGJh5JbTr8b).
- * Categories preserve Figma group names: gap, padding, stroke.
+ * Categories preserve Figma group names: gap, padding.
  */
 :root {
   /* Gap scale — complete */
@@ -28,13 +28,6 @@
   --padding-3xl: 40px;
   --padding-4xl: 64px;
   --padding-5xl: 96px;
-
-  /* Stroke widths */
-  --stroke-width-thin: 0.5px;
-  --stroke-width-default: 1px;
-  --stroke-width-focus: 1.5px;
-  --stroke-width-selected: 2px;
-  --stroke-width-thick: 3px;
 
   /* Stroke radii — complete */
   --stroke-radius-2xs: 2px;
