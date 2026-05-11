@@ -7,7 +7,7 @@ const meta: IconMeta = {
   tags: ["calendar","3"] as const,
 } as const;
 
-export function Calendar3({ size = 24, className, ...props }: IconProps) {
+export function Calendar3({ size = 24, strokeWidth = 2, className, ...props }: IconProps) {
   return (
     <svg
       width={size}
@@ -16,13 +16,10 @@ export function Calendar3({ size = 24, className, ...props }: IconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
-      className={cn(
-        'stroke-[var(--stroke-color-default)] [stroke-width:var(--stroke-width-selected)]',
-        className,
-      )}
+      className={cn(className)}
       {...props}
     >
-      <path d="M1 9H19M6 5V1M14 5V1M10 9V21M19 15L1 15M7.4 21H12.6C14.8402 21 15.9603 21 16.816 20.564C17.5686 20.1805 18.1805 19.5686 18.564 18.816C19 17.9603 19 16.8402 19 14.6V9.4C19 7.15979 19 6.03969 18.564 5.18404C18.1805 4.43139 17.5686 3.81947 16.816 3.43597C15.9603 3 14.8402 3 12.6 3H7.4C5.15979 3 4.03969 3 3.18404 3.43597C2.43139 3.81947 1.81947 4.43139 1.43597 5.18404C1 6.03969 1 7.15979 1 9.4V14.6C1 16.8402 1 17.9603 1.43597 18.816C1.81947 19.5686 2.43139 20.1805 3.18404 20.564C4.03969 21 5.15979 21 7.4 21Z" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <path d="M1 9H19M6 5V1M14 5V1M10 9V21M19 15L1 15M7.4 21H12.6C14.8402 21 15.9603 21 16.816 20.564C17.5686 20.1805 18.1805 19.5686 18.564 18.816C19 17.9603 19 16.8402 19 14.6V9.4C19 7.15979 19 6.03969 18.564 5.18404C18.1805 4.43139 17.5686 3.81947 16.816 3.43597C15.9603 3 14.8402 3 12.6 3H7.4C5.15979 3 4.03969 3 3.18404 3.43597C2.43139 3.81947 1.81947 4.43139 1.43597 5.18404C1 6.03969 1 7.15979 1 9.4V14.6C1 16.8402 1 17.9603 1.43597 18.816C1.81947 19.5686 2.43139 20.1805 3.18404 20.564C4.03969 21 5.15979 21 7.4 21Z" strokeLinecap="round" vectorEffect="non-scaling-stroke" stroke="currentColor" strokeWidth={strokeWidth}  />
     </svg>
   );
 }

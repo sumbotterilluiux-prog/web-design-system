@@ -7,11 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@fontsource-variable/mulish": "^5.2.8",
     "@tailwindcss/vite": "^4.2.4",
     "clsx": "^2.1.1",
     "react": "^19.2.5",

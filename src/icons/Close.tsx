@@ -7,7 +7,7 @@ const meta: IconMeta = {
   tags: ["close"] as const,
 } as const;
 
-export function Close({ size = 24, className, ...props }: IconProps) {
+export function Close({ size = 24, strokeWidth = 2, className, ...props }: IconProps) {
   return (
     <svg
       width={size}
@@ -16,13 +16,10 @@ export function Close({ size = 24, className, ...props }: IconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
-      className={cn(
-        'stroke-[var(--stroke-color-default)] [stroke-width:var(--stroke-width-selected)]',
-        className,
-      )}
+      className={cn(className)}
       {...props}
     >
-      <path d="M13 1L1 13M13 13L1 1.00001" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <path d="M13 1L1 13M13 13L1 1.00001" strokeLinecap="round" vectorEffect="non-scaling-stroke" stroke="currentColor" strokeWidth={strokeWidth}  />
     </svg>
   );
 }

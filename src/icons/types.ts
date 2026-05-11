@@ -8,6 +8,11 @@ export interface IconMeta {
   tags: readonly string[];
 }
 
-export interface IconProps extends SVGProps<SVGSVGElement> {
+export interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'strokeWidth'> {
   size?: number | string;
+  /**
+   * Numeric only. Stroke icons default to 2; size-aware containers like
+   * LeadingIconButton may override per size. Fill-based icons ignore this.
+   */
+  strokeWidth?: number;
 }
