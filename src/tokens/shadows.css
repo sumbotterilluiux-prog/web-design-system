@@ -1,0 +1,7 @@
+/* Shadow / elevation tokens — overridable per project.
+ * Sourced from Figma file `Tokens` (key: m6o0nlULKxBBGJh5JbTr8b).
+ * Currently only elevation-1 is defined in Figma; extend as the design
+ * system adds more levels. */
+:root {
+  --shadow-elevation-1: 0 0 4px 0 #00000029;
+}
