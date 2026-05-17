@@ -29,6 +29,13 @@ const BASE = cn(
   'text-(--color-ocean-500)',
   'disabled:cursor-not-allowed',
   'disabled:text-(--color-neutral-alpha-black-24)',
+  // Interactive states: shift through the ocean palette to mirror the
+  // filled-button family's behavior (hover lightens, active darkens)
+  // while keeping TextButton's no-background contract.
+  'transition-colors duration-150',
+  'motion-reduce:transition-none',
+  'enabled:hover:text-(--color-ocean-400)',
+  'enabled:active:text-(--color-ocean-600)',
   'font-(family-name:--font-family-body)',
   'font-(--font-weight-button)',
   'leading-(--font-line-height-body)',

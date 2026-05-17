@@ -18,18 +18,25 @@ export const BUTTON_HEIGHT_PX: Record<ButtonSize, number> = {
 /**
  * Base styles shared across Button, LeadingIconButton, TrailingIconButton,
  * and IconButton: layout primitives, shape, typography, focus baseline,
- * and disabled state.
+ * disabled state, and interactive (hover/pressed) states.
  *
  * Variant outlines (e.g. secondary's 1px border) use inset `box-shadow`
  * rather than CSS `border` so that box-sizing math doesn't make
  * outlined variants 2px larger than fill-only variants. Result: every
  * variant occupies identical pixels at the same content size.
  *
+ * Interactive states use a color-agnostic translucent overlay on a
+ * `::before` pseudo-element rather than swapping the button's own
+ * `background-color`. This keeps the behavior identical across themes:
+ * any brand color (current or future) gets the same subtle lightening on
+ * hover and subtle darkening on active, without per-variant tuning.
+ *
  * Each component owns its own size scale (padding, font size, gap, icon
  * size) since those differ per component contract.
  */
 export const BUTTON_BASE_CLASSES: string = cn(
   'inline-flex items-center justify-center leading-none',
+  'relative overflow-hidden',
   'rounded-(--stroke-radius-full)',
   'font-(family-name:--font-family-body)',
   'font-(--font-weight-button)',
@@ -42,6 +49,15 @@ export const BUTTON_BASE_CLASSES: string = cn(
   'disabled:bg-(--color-neutral-alpha-black-8)',
   'disabled:text-(--color-neutral-alpha-black-24)',
   'disabled:shadow-none',
+  // Interactive overlay: hover lightens, active darkens. `enabled:` gates
+  // both so disabled buttons get no overlay. `before:rounded-[inherit]`
+  // matches the button's pill so the tint follows the corner radius.
+  'before:content-[""] before:absolute before:inset-0',
+  'before:rounded-[inherit] before:pointer-events-none',
+  'before:transition-colors before:duration-150',
+  'motion-reduce:before:transition-none',
+  'enabled:hover:before:bg-(--color-neutral-alpha-white-8)',
+  'enabled:active:before:bg-(--color-neutral-alpha-black-8)',
 );
 
 export const BUTTON_VARIANT_CLASSES: Record<ButtonVariant, string> = {
