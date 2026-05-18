@@ -8,7 +8,12 @@ import {
   type ReactNode,
 } from 'react';
 import { cn } from '../../lib/cn';
-import { Check as CheckIcon, Minus as MinusIcon, STROKE_WIDTHS } from '../../icons';
+import {
+  AlertOctagon,
+  Check as CheckIcon,
+  Minus as MinusIcon,
+  STROKE_WIDTHS,
+} from '../../icons';
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
@@ -148,19 +153,23 @@ export function Checkbox({
       {errorMessage && (
         <div
           id={errorId}
-          className={cn(
-            'px-(--padding-2xl)',
-            'font-(family-name:--font-family-body)',
-            'font-(--font-weight-body-regular)',
-            'text-(length:--font-size-web-body-xs)',
-            'leading-(--font-line-height-body)',
-            // Figma uses a literal 50%-red here (not a token). Coral-600 is
-            // the nearest semantic match in our palette and reads with
-            // stronger contrast for an error indicator.
-            'text-(--color-coral-600)',
-          )}
+          className="flex items-center gap-(--gap-2xs) px-(--padding-2xl)"
         >
-          {errorMessage}
+          <AlertOctagon
+            size={16}
+            className="shrink-0 text-(--color-coral-500)"
+          />
+          <p
+            className={cn(
+              'font-(family-name:--font-family-body)',
+              'font-(--font-weight-body-bold)',
+              'text-(length:--font-size-web-body-sm)',
+              'leading-(--font-line-height-body)',
+              'text-(--color-coral-500)',
+            )}
+          >
+            {errorMessage}
+          </p>
         </div>
       )}
     </div>
