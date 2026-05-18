@@ -3,7 +3,7 @@ import { LeadingIconButton } from './LeadingIconButton';
 import { Placeholder } from '../../icons';
 
 const meta: Meta<typeof LeadingIconButton> = {
-  title: 'Components/LeadingIconButton',
+  title: 'Components/Leading Icon Button',
   component: LeadingIconButton,
   argTypes: {
     variant: {

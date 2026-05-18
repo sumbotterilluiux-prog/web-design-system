@@ -3,7 +3,7 @@ import { TrailingIconButton } from './TrailingIconButton';
 import { Placeholder } from '../../icons';
 
 const meta: Meta<typeof TrailingIconButton> = {
-  title: 'Components/TrailingIconButton',
+  title: 'Components/Trailing Icon Button',
   component: TrailingIconButton,
   argTypes: {
     variant: {
