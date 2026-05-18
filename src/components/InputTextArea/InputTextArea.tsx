@@ -2,67 +2,38 @@ import {
   useId,
   useState,
   type ChangeEvent,
-  type InputHTMLAttributes,
   type ReactNode,
+  type TextareaHTMLAttributes,
 } from 'react';
 import { cn } from '../../lib/cn';
 import { AlertOctagon } from '../../icons';
 
-export type InputTextSize = 'small' | 'medium' | 'large';
-
-export interface InputTextProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  /** Visual density. */
-  size?: InputTextSize;
-  /** Visual error state. Sets `aria-invalid` on the input. */
+export interface InputTextAreaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  /** Visual error state. Sets `aria-invalid` on the textarea. */
   error?: boolean;
-  /** Top-row label rendered above the field. Becomes the input's
+  /** Top-row label rendered above the field. Becomes the textarea's
    * accessible name when set. */
   label?: ReactNode;
   /** Renders an "(optional)" suffix next to the label. */
   optional?: boolean;
   /** Helper text rendered below the label. */
   hintText?: ReactNode;
-  /** When true, renders `current/max` derived from the input value and
-   * its `maxLength` attribute. */
+  /** When true, renders `current/max` derived from the value and the
+   * `maxLength` attribute. */
   characterCount?: boolean;
   /** Error text rendered below the field with an alert icon. Visible
    * only while `error` is true. */
   errorMessage?: ReactNode;
-  /** Icon node rendered at the start of the field. */
-  leadingIcon?: ReactNode;
-  /** Icon node rendered at the end of the field. */
-  trailingIcon?: ReactNode;
 }
 
-const FIELD_SIZE: Record<InputTextSize, string> = {
-  small: 'py-(--padding-2xs) px-(--padding-sm)',
-  medium: 'h-10 py-(--padding-xs) px-(--padding-sm)',
-  large: 'h-12 py-(--padding-sm) px-(--padding-md)',
-};
-
-const TEXT_SIZE: Record<InputTextSize, string> = {
-  small: 'text-(length:--font-size-web-body-sm)',
-  medium: 'text-(length:--font-size-web-body-md)',
-  large: 'text-(length:--font-size-web-body-md)',
-};
-
-const ICON_BOX: Record<InputTextSize, string> = {
-  small: 'size-4',
-  medium: 'size-5',
-  large: 'size-6',
-};
-
-export function InputText({
-  size = 'medium',
+export function InputTextArea({
   error = false,
   label,
   optional = false,
   hintText,
   characterCount = false,
   errorMessage,
-  leadingIcon,
-  trailingIcon,
   className,
   id,
   disabled,
@@ -70,14 +41,15 @@ export function InputText({
   defaultValue,
   onChange,
   maxLength,
-  ...inputProps
-}: InputTextProps) {
+  rows,
+  ...textareaProps
+}: InputTextAreaProps) {
   const isControlled = value !== undefined;
   const [internalValue, setInternalValue] = useState(defaultValue ?? '');
   const currentValue = isControlled ? value : internalValue;
   const currentLength = String(currentValue ?? '').length;
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (!isControlled) setInternalValue(e.target.value);
     onChange?.(e);
   };
@@ -141,12 +113,11 @@ export function InputText({
       <label
         htmlFor={reactId}
         className={cn(
-          'group flex w-full items-center gap-(--gap-xs)',
-          'rounded-(--stroke-radius-sm) border',
+          'group block w-full overflow-hidden',
+          'rounded-(--stroke-radius-sm) border p-0.75',
           'transition-colors duration-150 motion-reduce:transition-none',
-          FIELD_SIZE[size],
           disabled
-            ? 'cursor-not-allowed bg-(--color-neutral-solid-200) border-(--stroke-color-disabled)'
+            ? 'cursor-not-allowed bg-(--color-neutral-alpha-black-8) border-(--stroke-color-disabled)'
             : error
               ? cn(
                   'bg-(--color-neutral-solid-50) border-(--color-coral-500)',
@@ -161,41 +132,28 @@ export function InputText({
                 ),
         )}
       >
-        {leadingIcon && (
-          <span
-            aria-hidden="true"
-            className={cn(
-              'inline-flex shrink-0 items-center justify-center',
-              ICON_BOX[size],
-              disabled
-                ? 'text-(--color-neutral-alpha-black-24)'
-                : 'text-(--color-font-primary)',
-            )}
-          >
-            {leadingIcon}
-          </span>
-        )}
-        <input
-          {...inputProps}
+        <textarea
+          {...textareaProps}
           id={reactId}
-          type={inputProps.type ?? 'text'}
           disabled={disabled}
           maxLength={maxLength}
+          rows={rows}
           value={isControlled ? value : undefined}
           defaultValue={!isControlled ? defaultValue : undefined}
           onChange={handleChange}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
           className={cn(
-            'min-w-0 flex-1 bg-transparent outline-none',
+            'block w-full min-h-20 resize-y bg-transparent outline-none',
+            'px-(--padding-md) py-(--padding-sm)',
             'font-(family-name:--font-family-body)',
             'font-(--font-weight-body-regular)',
             'leading-(--font-line-height-body)',
-            TEXT_SIZE[size],
+            'text-(length:--font-size-web-body-md)',
             disabled
               ? cn(
                   'cursor-not-allowed',
-                  'text-(--color-neutral-alpha-black-24)',
+                  'text-(--color-font-tertiary)',
                   'placeholder:text-(--color-neutral-alpha-black-24)',
                 )
               : error
@@ -207,20 +165,6 @@ export function InputText({
                   ),
           )}
         />
-        {trailingIcon && (
-          <span
-            aria-hidden="true"
-            className={cn(
-              'inline-flex shrink-0 items-center justify-center',
-              ICON_BOX[size],
-              disabled
-                ? 'text-(--color-neutral-alpha-black-24)'
-                : 'text-(--color-font-primary)',
-            )}
-          >
-            {trailingIcon}
-          </span>
-        )}
       </label>
 
       {(characterCount || (error && errorMessage)) && (
