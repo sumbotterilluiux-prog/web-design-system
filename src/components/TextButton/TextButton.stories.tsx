@@ -3,7 +3,7 @@ import { TextButton } from './TextButton';
 import { Placeholder } from '../../icons';
 
 const meta: Meta<typeof TextButton> = {
-  title: 'Components/TextButton',
+  title: 'Components/Text Button',
   component: TextButton,
   argTypes: {
     size: {
